@@ -16,26 +16,40 @@ public class Tail : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
-            ExtendTail();
+            ExtendTail(1);
         else if (Input.GetKeyDown(KeyCode.Backspace))
-            ShortenTail();
+            ShortenTail(1);
     }
 
-    public void ExtendTail()
+    public void ExtendTail(int ex)
     {
-        if(count < tails.Length)
+        if (count < tails.Length)
         {
-            //tails[count].GetComponent<Collider>().enabled = true;
-            //tails[count].GetComponent<MeshRenderer>().enabled = true;
-            count++;
+            MeshRenderer[] sp = tails[count].GetComponentsInChildren<MeshRenderer>();
+            tails[count].GetComponent<Collider>().enabled = true;
+            sp[1].GetComponent<MeshRenderer>().enabled = true;
+            if (count > 0)
+            {
+                sp = tails[count - 1].GetComponentsInChildren<MeshRenderer>();
+                sp[0].GetComponent<MeshRenderer>().enabled = true;
+                sp[1].GetComponent<MeshRenderer>().enabled = false;
+            }
+            count += ex;
         }
     }
-    public void ShortenTail()
+    public void ShortenTail(int sh)
     {
         if(count > 0) { 
-        count--;
-        //tails[count].GetComponent<Collider>().enabled = false;
-        //tails[count].GetComponent<MeshRenderer>().enabled = false;
+            count -= sh;
+            MeshRenderer[] sp = tails[count].GetComponentsInChildren<MeshRenderer>();
+            tails[count].GetComponent<Collider>().enabled = false;
+            sp[1].GetComponent<MeshRenderer>().enabled = false;
+            if (count - 1 > 0)
+            {
+                sp = tails[count - 1].GetComponentsInChildren<MeshRenderer>();
+                sp[1].GetComponent<MeshRenderer>().enabled = true;
+                sp[0].GetComponent<MeshRenderer>().enabled = false;
+            }
         }
     }
 }
