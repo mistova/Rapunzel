@@ -57,9 +57,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Move.cs" />
+    <Compile Include="Assets\Sprey.cs" />
     <Compile Include="Assets\Scripts\Tail.cs" />
     <Compile Include="Assets\Scripts\CharacterMovement.cs" />
-    <Compile Include="Assets\Sprey.cs" />
+    <Compile Include="Assets\Scripts\DragAndShoot.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
