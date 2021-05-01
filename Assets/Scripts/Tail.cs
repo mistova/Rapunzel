@@ -13,6 +13,11 @@ public class Tail : MonoBehaviour
     [SerializeField]
     float speed;
 
+    Vector3 mousePressDownPos;
+    Vector3 mouseReleasePos;
+
+    [SerializeField] float forceMultiplier = 10;
+
     int count;
 
     void Start()
@@ -26,8 +31,35 @@ public class Tail : MonoBehaviour
             ExtendTail(1);
         else if (Input.GetKeyDown(KeyCode.Backspace))
             ShortenTail(1);
+        else if(Input.GetMouseButtonDown(0))
+            mousePressDownPos = Input.mousePosition;
+        else if (Input.GetMouseButtonUp(0))
+        {
+            mouseReleasePos = Input.mousePosition;
+            Shoot(mousePressDownPos - mouseReleasePos);
+        }
+        /*
         else if (Input.GetMouseButton(0))
-            Hook();
+            Hook();*/
+    }
+
+    /*private void OnMouseDown()
+    {
+        mousePressDownPos = Input.mousePosition;
+    }
+
+    private void OnMouseUp()
+    {
+        mouseReleasePos = Input.mousePosition;
+        Shoot(mousePressDownPos - mouseReleasePos);
+    }*/
+
+    void Shoot(Vector3 Force)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            tails[i].GetComponent<Rigidbody>().AddForce(new Vector3(Force.x, Force.y, Force.y) * forceMultiplier);
+        }
     }
 
     private void Hook()
