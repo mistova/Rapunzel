@@ -3,9 +3,19 @@ using UnityEngine;
 
 public class Tail : MonoBehaviour
 {
+    GameObject[] tails;
 
     [SerializeField]
-    GameObject[] tails;
+    GameObject rootHair;
+
+    [SerializeField]
+    Transform holder;
+
+    [SerializeField]
+    GameObject hairPref;
+
+    [SerializeField]
+    int hairCount;
 
     [SerializeField]
     Camera camera;
@@ -22,7 +32,9 @@ public class Tail : MonoBehaviour
 
     void Start()
     {
-        count = 0;
+        count = 1;
+        tails = new GameObject[hairCount + 1];
+        tails[0] = rootHair.gameObject;
     }
 
     void Update()
@@ -81,7 +93,7 @@ public class Tail : MonoBehaviour
     {
         for(int i = 0; i < ex && count < tails.Length; i++)
         {
-            MeshRenderer[] sp = tails[count].GetComponentsInChildren<MeshRenderer>();
+            /*MeshRenderer[] sp = tails[count].GetComponentsInChildren<MeshRenderer>();
             tails[count].GetComponent<Collider>().enabled = true;
             sp[1].GetComponent<MeshRenderer>().enabled = true;
             if (count > 0)
@@ -89,24 +101,25 @@ public class Tail : MonoBehaviour
                 sp = tails[count - 1].GetComponentsInChildren<MeshRenderer>();
                 sp[0].GetComponent<MeshRenderer>().enabled = true;
                 sp[1].GetComponent<MeshRenderer>().enabled = false;
-            }
-            count ++;
+            }*/
+            tails[count] = Instantiate(hairPref, tails[count - 1].transform.position, tails[count - 1].transform.rotation, holder);
+            tails[count].GetComponent<CharacterJoint>().connectedBody = tails[count - 1].GetComponent<Rigidbody>();
+            count++;
         }
     }
     public void ShortenTail(int sh)
     {
-        for (int i = 0; i < sh && count > 0; i++)
-        { 
-            count --;
+        for (int i = 0; i < sh && count > 1; i++)
+        { /*
             MeshRenderer[] sp = tails[count].GetComponentsInChildren<MeshRenderer>();
             tails[count].GetComponent<Collider>().enabled = false;
             sp[1].GetComponent<MeshRenderer>().enabled = false;
-            if (count - 1 > 0)
-            {
                 sp = tails[count - 1].GetComponentsInChildren<MeshRenderer>();
                 sp[1].GetComponent<MeshRenderer>().enabled = true;
                 sp[0].GetComponent<MeshRenderer>().enabled = false;
-            }
+            */
+            count--;
+            Destroy(tails[count]);
         }
     }
 }
