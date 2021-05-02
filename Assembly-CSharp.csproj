@@ -61,6 +61,7 @@
     <Compile Include="Assets\Scripts\Tail.cs" />
     <Compile Include="Assets\Scripts\V2.0 Hook\DragAndShoot.cs" />
     <Compile Include="Assets\Scripts\CharacterMovement.cs" />
+    <Compile Include="Assets\Scripts\V2.0 Hook\HowFar.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

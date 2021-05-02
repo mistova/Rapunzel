@@ -18,14 +18,15 @@ public class HowFar : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+        if(Instance == null)
+            Instance = this;
     }
 
     #endregion
 
-    public void UpdateTrajectory(Vector3 forceVector, Rigidbody rigidbody, Vector3 startingPoint)
+    public void UpdateTrajectory(Vector3 forceVector, Vector3 startingPoint)
     {
-        Vector3 velocity = (forceVector / rigidbody.mass) * Time.fixedDeltaTime;
+        Vector3 velocity = (forceVector / 1) * Time.fixedDeltaTime;
 
         float FlightDuration = (2 * velocity.y) / Physics.gravity.y;
 
